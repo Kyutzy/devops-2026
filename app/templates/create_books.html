@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Livros</title>
+    <style>
+        body { font-family: sans-serif; max-width: 400px; margin: 20px auto; }
+        label { display: block; margin-top: 10px; }
+        input { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+        button { margin-top: 15px; padding: 10px; width: 100%; cursor: pointer; }
+        #mensagem { margin-top: 15px; font-weight: bold; color: green; }
+    </style>
+</head>
+<body>
+    <h2>Cadastrar Novo Livro</h2>
+    
+    <form id="formLivro">
+        <label>Nome do Livro:
+            <input type="text" id="title" placeholder="Ex: Duna" required>
+        </label>
+        
+        <label>Autor:
+            <input type="text" id="author" placeholder="Ex: Frank Herbert" required>
+        </label>
+        
+        <label>ISSN:
+            <input type="text" id="ISSN" placeholder="Ex: 1234-5678" required>
+        </label>
+        
+        <label>Data de Publicação:
+            <!-- input do tipo date facilita pro usuário e evita erros de digitação -->
+            <input type="date" id="publishing_date" required>
+        </label>
+        
+        <label>Número de Páginas:
+            <input type="number" id="paginas" placeholder="Ex: 400" required>
+        </label>
+        
+        <button type="submit">Cadastrar</button>
+    </form>
+    <div id="mensagem"></div>
+
+    <script>
+        document.getElementById('formLivro').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const dataBruta = document.getElementById('publishing_date').value;
+            const [ano, mes, dia] = dataBruta.split('-');
+            const anoCurto = ano.slice(-2);
+            const dataFormatada = `${dia}/${mes}/${anoCurto}`;
+            const payload = {
+                title: document.getElementById('title').value,
+                author: document.getElementById('author').value,
+                ISSN: document.getElementById('ISSN').value,
+                publishing_date: dataFormatada,
+                paginas: parseInt(document.getElementById('paginas').value)
+            };
+
+            try {
+                const response = await fetch('/books', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    document.getElementById('mensagem').innerText = "Livro cadastrado com sucesso!";
+                    document.getElementById('mensagem').style.color = "green";
+                    document.getElementById('formLivro').reset(); // Limpa o form
+                } else {
+                    document.getElementById('mensagem').innerText = "Erro ao cadastrar livro.";
+                    document.getElementById('mensagem').style.color = "red";
+                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                document.getElementById('mensagem').innerText = "Erro ao conectar com o servidor.";
+                document.getElementById('mensagem').style.color = "red";
+            }
+        });
+    </script>
+</body>
+</html>
