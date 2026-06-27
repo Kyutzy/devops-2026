@@ -27,4 +27,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Sleep"
-        run: sleep 2
+        run: sleep 1
