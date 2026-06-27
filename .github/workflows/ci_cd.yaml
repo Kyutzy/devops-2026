@@ -3,16 +3,19 @@ name: pipeline
 on:
   workflow_dispatch
 
-runs-on: ubuntu-latest
+
 
 jobs:
-  estagio01:    
+  estagio01:
+    runs-on: ubuntu-latest
     steps:
       - name: Olá, mundo
         run: echo "Olá, mundo eu sou o pipeline!"
   estagio02:
+    runs-on: ubuntu-latest
     steps:
       run: sleep 5
   estagio03:
+    runs-on: ubuntu-latest
     steps:
       run: sleep 5
