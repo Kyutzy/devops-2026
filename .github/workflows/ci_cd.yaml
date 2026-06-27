@@ -12,10 +12,14 @@ jobs:
       - name: Olá, mundo
         run: echo "Olá, mundo eu sou o pipeline!"
   estagio02:
+    name: sleep1
+    needs: estagio01
     runs-on: ubuntu-latest
     steps:
       run: sleep 5
   estagio03:
+    name: sleep2
+    needs: estagio02
     runs-on: ubuntu-latest
     steps:
       run: sleep 5
