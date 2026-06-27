@@ -17,7 +17,7 @@ jobs:
       - name: Outro echo
         run: echo "Qualquer coisa"
   estagio02:
-    needs: estagio01
+    needs: integracao-continua
     runs-on: ubuntu-latest
     steps:
       - name: "Sleep"
