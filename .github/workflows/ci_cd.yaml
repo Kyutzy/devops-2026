@@ -1,27 +1,28 @@
-name: pipeline
+name: "Exemplo pipeline"
 
 on:
   workflow_dispatch:
+  push: [main]
 
 jobs:
-  estagio01:
+  integracao-continua:
     runs-on: ubuntu-latest
     steps:
-      - name: Olá, mundo
-        run: echo "Olá, mundo eu sou o pipeline!"
-
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Listagem de conteúdos do diretório
+        run: ls -la
+      - name: Outro echo
+        run: echo "Qualquer coisa"
   estagio02:
-    name: sleep1
     needs: estagio01
     runs-on: ubuntu-latest
     steps:
-      - name: Sleep 5
+      - name: "Sleep"
         run: sleep 5
-
   estagio03:
-    name: sleep2
     needs: estagio02
     runs-on: ubuntu-latest
     steps:
-      - name: Sleep 2
+      - name: "Sleep"
         run: sleep 2
