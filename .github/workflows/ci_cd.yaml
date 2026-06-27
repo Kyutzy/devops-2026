@@ -1,0 +1,11 @@
+name: pipeline
+
+on:
+  workflow_dispatch
+
+jobs:
+  estagio01:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Olá, mundo
+        run: echo "Olá, mundo eu sou o pipeline!"
